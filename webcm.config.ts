@@ -16,7 +16,7 @@ export default {
     },
   ],
   // The target server URL to proxy
-  //   target: "http://127.0.0.1:8000",
+  target: "http://127.0.0.1:8000",
   // The hostname to which WebCM should bind
   hostname: "localhost",
   // The tracking URL will get all POST requests coming from `webcm.track`

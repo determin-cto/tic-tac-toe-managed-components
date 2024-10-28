@@ -1,0 +1,113 @@
+<style>
+  .tic-component{
+    display:inline-block;
+    min-width: 350px;
+  }
+  .tic-container{
+    background: #DDD;
+  }
+  .tic-row{
+    display: block;
+    height: 125px;
+  }
+  .tic-row:nth-child(2){
+    margin-top:5px;
+    margin-bottom:5px;
+  }
+  .tic-col{
+    display: inline-block;
+    width: 125px;
+    height: 100%;
+    background-color: #FFF;
+    cursor:pointer;
+    vertical-align: middle;
+    font-size: 80px;
+    text-align: center;
+  }
+  .tic-col:nth-child(2) {
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+  .hidden{
+    display: none;
+  }
+</style>
+<script>
+  const TYPES = {
+    "1": "×",
+    "-1": "◯"
+  }
+
+  class Indicator{
+
+  }
+
+  class TicTacToe {
+    type = null; // 1 if cross or -1 if circle
+    state = new Array(9).fill(0);
+    start(type) {
+      this.type = type;
+      document.querySelector('#tic-display').style.display = 'block';
+      document.querySelector('#tic-picker').style.display = 'none';
+    }
+    nextMove(event) {
+      const target = event.target;
+      if (!target || target.getAttribute('index') === null) {
+        return;
+      }
+      const index = parseInt(event.target.getAttribute('index'));
+      if (this.state[index] !== 0) {
+        alert("Cannot choose that position again");
+        return;
+      }
+      target.innerHTML = TYPES[this.type]
+      this.state[index] = this.type;
+
+      
+      // Wait for the computer to decide
+      setTimeout(async () => {
+        const result = await fetch("/webcm/tic-tac-toe/next-move", {
+          method: "POST",
+          body: JSON.stringify({ state: this.state }),
+        });
+        const payload = await result.json();
+        const computerNextMove = payload.index;
+        this.state[computerNextMove] = this.type * -1;
+        document.querySelector("[index='" + computerNextMove + "']").innerHTML = TYPES[this.type * -1];
+      }, 1000)
+    }
+  }
+
+  window.ticTacToe = new TicTacToe();
+  window.ticTacToe = new TurnIndicator();
+</script>
+
+<div class="tic-component">
+    <div class="tic-header">Tic Tac Toe</div>
+    <p>Start by choosing a cross or a circle</p>
+    <div class="tic-indicator">
+      Me / Computer
+    </div>
+    <div class="tic-picker" id="tic-picker">
+      <button onclick="ticTacToe.start(1)">X</button>
+      <button onclick="ticTacToe.start(-1)">O</button>
+    </div>
+    <div class="tic-container" id="tic-display" 
+      onclick="ticTacToe.nextMove(event)" style="display:none;">
+      <div class="tic-row">
+        <div class="tic-col" index="0"></div>
+        <div class="tic-col" index="1"></div>
+        <div class="tic-col" index="2"></div>
+      </div>
+      <div class="tic-row">
+        <div class="tic-col" index="3"></div>
+        <div class="tic-col" index="4"></div>
+        <div class="tic-col" index="5"></div>
+      </div>
+      <div class="tic-row">
+        <div class="tic-col" index="6"></div>
+        <div class="tic-col" index="7"></div>
+        <div class="tic-col" index="8"></div>
+      </div>
+    </div>
+</div>
