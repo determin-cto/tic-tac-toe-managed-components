@@ -4,8 +4,9 @@ require("esbuild").buildSync({
   minify: true,
   platform: "node",
   format: "esm",
+  assetNames: "assets-[name]",
   loader: {
-    '.html': 'copy'
+    '.html': 'file'
   },
   target: ["esnext"],
   tsconfig: "tsconfig.build.json",
