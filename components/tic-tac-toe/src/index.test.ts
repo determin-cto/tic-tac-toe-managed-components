@@ -1,4 +1,4 @@
-import crypto from 'crypto'
+import crypto from 'crypto';
 
 beforeAll(() => {
   vi.stubGlobal('crypto', crypto)

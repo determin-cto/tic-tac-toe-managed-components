@@ -1,5 +1,3 @@
-const { default: copy } = require("esbuild-plugin-copy");
-
 require("esbuild").buildSync({
   entryPoints: ["src/index.ts"],
   bundle: true,
