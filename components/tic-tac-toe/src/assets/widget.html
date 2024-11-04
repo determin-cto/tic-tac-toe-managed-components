@@ -2,23 +2,26 @@
   body{
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   }
-  .tic-component{
+  .game-wrapper{
+    text-align:center;
+  }
+  .game-component{
     display:inline-block;
     min-width: 350px;
   }
-  .tic-container{
+  .board-container{
     position:relative;
     background: #DDD;
   }
-  .tic-row{
+  .board-row{
     display: block;
     height: 125px;
   }
-  .tic-row:nth-child(2){
+  .board-row:nth-child(2){
     margin-top:5px;
     margin-bottom:5px;
   }
-  .tic-col{
+  .board-col{
     display: inline-block;
     width: 125px;
     height: 100%;
@@ -28,14 +31,10 @@
     font-size: 80px;
     text-align: center;
   }
-  .tic-col:nth-child(2) {
-    margin-left: 5px;
-    margin-right: 5px;
-  }
-  .tic-picker{
+  .game-picker{
     text-align: center;
   }
-  .tic-picker .btn{
+  .game-picker .btn{
     display: inline-block;
     font-size: 40px;
     width:110px;
@@ -103,27 +102,27 @@
   class TicTacToe {
     type = null; // 1 if cross or -1 if circle
     state;
-    constructor(indicator){
+    constructor(indicator, board, display){
       this.indicator = indicator
-      this.game = document.querySelector('#tic-game');
-      this.display = document.querySelector('#tic-display');
-      this.picker = document.querySelector('#tic-picker');
+      this.board = document.querySelector('#board');
+      this.display = document.querySelector('#game-display');
+      this.picker = document.querySelector('#game-picker');
       this.winnerBoard = document.querySelector('#winner-board');
     }
     start(type) {
       this.type = type;
-      this.game.style.display = 'block';
+      this.board.style.display = 'block';
       this.picker.style.display = 'none';
       this.winnerBoard.classList.add("hidden")
       this.winnerBoard.style.display = "none";
       this.state = new Array(9).fill(0);
-      this.game.querySelectorAll('.tic-col[index]').forEach(element=>{
+      this.board.querySelectorAll('.board-col[index]').forEach(element=>{
         element.innerHTML = ""
       })
     }
     restart(){
       this.picker.style.display = "block";
-      this.game.style.display = "none";
+      this.board.style.display = "none";
     }
     nextMove(event) {
       const target = event.target;
@@ -132,7 +131,7 @@
       }
       const index = parseInt(event.target.getAttribute('index'));
       if (this.state[index] !== 0) {
-        alert("Cannot choose that position again");
+        alert("Position already taken");
         return;
       }
       target.innerHTML = TYPES[this.type]
@@ -142,6 +141,8 @@
         return;
       }
 
+      // Disable clicking for the first player
+      this.display.style.pointerEvents = 'none';
       this.indicator.setTurn(1);
       // Wait for the computer to decide
       setTimeout(async () => {
@@ -153,12 +154,14 @@
         const computerNextMove = payload.index;
         this.state[computerNextMove] = this.type * -1;
         document.querySelector("[index='" + computerNextMove + "']").innerHTML = TYPES[this.type * -1];
+
+        // Re-enable clicking for the first player
+        this.display.style.pointerEvents = 'all';
         this.indicator.setTurn(0);
-      
+
         if(this.finishIfComplete()){
           return;
         }
-        
       }, 1000)
     }
     finishIfComplete(){
@@ -214,42 +217,44 @@
   }
 </script>
 
-<div class="tic-component">
-    <div class="tic-header">Tic Tac Toe</div>
-        
-    <div class="tic-picker" id="tic-picker">
-      <p>Start by choosing a cross or a circle</p>
-      <button class="btn" onclick="ticTacToe.start(1)">×</button>
-      <button class="btn" onclick="ticTacToe.start(-1)">◯</button>
-    </div>
-    
-    <div id="tic-game" style="display:none;">
-      <div class="turn-indicator" id="turn-indicator">
-        <span>Me</span> / 
-        <span>Computer</span>
+<div class="game-wrapper">
+  <div class="game-component">
+      <div class="game-header">Tic Tac Toe</div>
+          
+      <div class="game-picker" id="game-picker">
+        <p>Start by choosing a cross or a circle</p>
+        <button class="btn" onclick="ticTacToe.start(1)">×</button>
+        <button class="btn" onclick="ticTacToe.start(-1)">◯</button>
       </div>
+      
+      <div id="board" style="display:none;">
+        <div class="turn-indicator" id="turn-indicator">
+          <span>Me</span> / 
+          <span>Computer</span>
+        </div>
 
-      <div class="tic-container" id="tic-display" 
-      onclick="ticTacToe.nextMove(event)">
-      <div class="tic-row">
-        <div class="tic-col" index="0"></div>
-        <div class="tic-col" index="1"></div>
-        <div class="tic-col" index="2"></div>
+        <div class="board-container" id="game-display" 
+        onclick="ticTacToe.nextMove(event)">
+        <div class="board-row">
+          <div class="board-col" index="0"></div>
+          <div class="board-col" index="1"></div>
+          <div class="board-col" index="2"></div>
+        </div>
+        <div class="board-row">
+          <div class="board-col" index="3"></div>
+          <div class="board-col" index="4"></div>
+          <div class="board-col" index="5"></div>
+        </div>
+        <div class="board-row">
+          <div class="board-col" index="6"></div>
+          <div class="board-col" index="7"></div>
+          <div class="board-col" index="8"></div>
+        </div>
+        <div id="winner-board" class="winner-board hidden" style="display:none;">
+          <p id="winner-announcement" class="winner-announcement"></p>
+          <button class="btn" onclick="ticTacToe.restart()">Restart</button>
+        </div>
       </div>
-      <div class="tic-row">
-        <div class="tic-col" index="3"></div>
-        <div class="tic-col" index="4"></div>
-        <div class="tic-col" index="5"></div>
       </div>
-      <div class="tic-row">
-        <div class="tic-col" index="6"></div>
-        <div class="tic-col" index="7"></div>
-        <div class="tic-col" index="8"></div>
-      </div>
-      <div id="winner-board" class="winner-board hidden" style="display:none;">
-        <p id="winner-announcement" class="winner-announcement"></p>
-        <button class="btn" onclick="ticTacToe.restart()">Restart</button>
-      </div>
-    </div>
-    </div>
+  </div>
 </div>

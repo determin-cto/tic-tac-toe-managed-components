@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "cd components/tic-tac-toe && npm install && npm run bundle && cd ../.. && npx webcm"
+    "dev": "cd components/tic-tac-toe && npm install && npm run bundle && cd ../.. && npx webcm",
+    "deploy": "npx managed-component-to-cloudflare-worker ./components/tic-tac-toe/dist/index.js tic-tac-toe"
   },
   "author": "",
   "license": "ISC"
