@@ -12,7 +12,8 @@ interface Payload {
 
 export default async function (manager: Manager, _settings: ComponentSettings) {
 
-  manager.serve('/public', 'assets')
+  const path = manager.serve('/public', 'public');
+  console.log(`Serving public files under ${path}`);
 
   manager.route("/next-move", async (request) => {
     const body = await parseJsonBody<Payload>(request);

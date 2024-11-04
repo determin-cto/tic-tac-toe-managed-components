@@ -1,3 +1,5 @@
+const { default: copy } = require("esbuild-plugin-copy");
+
 require("esbuild").buildSync({
   entryPoints: ["src/index.ts"],
   bundle: true,
@@ -6,7 +8,7 @@ require("esbuild").buildSync({
   format: "esm",
   assetNames: "assets-[name]",
   loader: {
-    '.html': 'file'
+    '.html': 'file',
   },
   target: ["esnext"],
   tsconfig: "tsconfig.build.json",

@@ -1,0 +1,80 @@
+body{
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.game-wrapper{
+  text-align:center;
+}
+.game-component{
+  display:inline-block;
+  min-width: 350px;
+}
+.board-container{
+  position:relative;
+  background: #DDD;
+}
+.board-row{
+  display: block;
+  height: 125px;
+}
+.board-row:nth-child(2){
+  margin-top:5px;
+  margin-bottom:5px;
+}
+.board-col{
+  display: inline-block;
+  width: 125px;
+  height: 100%;
+  background-color: #FFF;
+  cursor:pointer;
+  vertical-align: middle;
+  font-size: 80px;
+  text-align: center;
+}
+.game-picker{
+  text-align: center;
+}
+.game-picker .btn{
+  display: inline-block;
+  font-size: 40px;
+  width:110px;
+  line-height: 60px;
+}
+.btn{
+  padding: 10px 24px;
+  background-color: white;
+  border: solid 2px #999;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.hidden{
+  display: none;
+}
+.turn-indicator {
+  text-align:center;
+  margin: 24px 0;
+}
+.turn-indicator .active{
+  font-size: 19px;
+  font-weight: bold;
+}
+.winner-board{
+  position:absolute;
+  top:0;
+  left:0;
+  bottom:0;
+  right:0;
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: opacity 0.5s, transform 0.5s;
+  background-color: rgba(255,255,255,0.9);
+}
+.winner-announcement{
+  display:block;
+  font-size: 40px;
+}
+.winner-board.hidden{
+  opacity: 0;
+  transform: scale(2);
+}
