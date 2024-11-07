@@ -1,3 +1,34 @@
+# Tic-tac-toe solution 
+
+## Getting started
+1. To run the project, you can run the following command:
+```bash
+npm start
+```
+> This will start the website and then start the webcm (Components Manager) in parallel
+
+2. Go to the URL to open the website with the Tic-tac-toe widget
+```
+http://localhost:1337/
+```
+
+## Extra features that were implemented
+- Live-reload when changing the source code (both on the server and client code)
+- Using Typescript on both the server and the client
+- ESBuild now bundles server code, client code and CSS
+- Separate HTML, CSS and JS (Typescript)
+- Added tests for some functions used
+- Small bit of CSS animation when announcing the winner/loser
+
+## Additional things that could be improved
+To maintain simplicity of the proposed solution, I haven't implemented everything I had in mind.
+Here are the different improvements we can implement next:
+- [ ] Make the worker URL an environment variable instead of hardcoding it
+- [ ] Add E2E tests to test the UI (Use playwright for example)
+- [ ] 
+
+
+
 # Cloudflare Zaraz Technical Assignment
 
 ## Description
