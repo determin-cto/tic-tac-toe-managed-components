@@ -12,7 +12,7 @@ interface Payload {
 
 export default async function (manager: Manager, _settings: ComponentSettings) {
 
-  const path = manager.serve('/public', 'public');
+  const path = manager.serve('/public', 'dist/www/');
   console.log(`:: Serving public files under ${path}`);
 
   manager.route("/next-move", async (request) => {

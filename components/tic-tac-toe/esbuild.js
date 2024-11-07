@@ -1,4 +1,5 @@
-require("esbuild").buildSync({
+const esbuild = require("esbuild");
+esbuild.build({
   entryPoints: ["src/index.ts"],
   bundle: true,
   minify: true,
@@ -11,4 +12,19 @@ require("esbuild").buildSync({
   target: ["esnext"],
   tsconfig: "tsconfig.build.json",
   outfile: "dist/index.js",
+})
+
+esbuild.build({
+  entryPoints: ["src/browser/main.ts"],
+  bundle: true,
+  minify: true,
+  outfile: "dist/www/script.js",
+  tsconfig: "tsconfig.build.json"
+})
+
+esbuild.build({
+  entryPoints: ['src/browser/main.css'],
+  minify: true,
+  bundle: true,
+  outfile: 'dist/www/style.css',
 })

@@ -4,9 +4,8 @@
   "description": "Returns an tic-tac-toe embed",
   "main": "dist/index.js",
   "scripts": {
-    "webcm": "cd ../../ && npx webcm",
     "watch": "nodemon -e ts,js,css,html -x \"npm-run-all \"build\" \"webcm\"\" ",
-    "dev": "nodemon npm run build && cd ../../ && npx webcm",
+    "webcm": "cd ../../ && npx webcm",
     "lint": "eslint src",
     "lint:fix": "eslint src --fix",
     "bundle": "node esbuild.js",
