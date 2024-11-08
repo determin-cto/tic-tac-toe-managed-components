@@ -25,7 +25,7 @@ To maintain simplicity of the proposed solution, I haven't implemented everythin
 Here are the different improvements we can implement next:
 - [ ] Make the worker URL an environment variable instead of hardcoding it
 - [ ] Add E2E tests to test the UI (Use playwright for example)
-- [ ] 
+- [ ] Introduce more tests
 
 
 
